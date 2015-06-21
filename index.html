@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Predict MPG</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Predict MPG">
+  <meta name="author" content="Shereen Jones">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/ribbons.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Predict MPG</h1>
+    <h2>Use number of cylinders and weight in tons, to predict vehicle mpg</h2>
+    <p>Shereen Jones<br/>R Student</p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Welcome to Predict MPG</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Predict MPG is a shiny app that allows you to predict the miles-per-gallon of any vehicle given the number of cylinders and weight of the vehicle.</p>
+
+<p>It is a simple, easy-to-use, intuitive application.</p>
+
+<p>The application is available at <a href="http://shereenjones.shinyapps.io/pa1_app">http://shereenjones.shinyapps.io/pa1_app</a> and may be used by anyone who so desires.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-2" style="background:;">
+  <hgroup>
+    <h2>Basis of the Prediction Model</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>The prediction model is built using the mtcars data in R.  The model is developed as follows:</p>
+
+<pre><code class="r">     library(UsingR)
+     predModel &lt;- lm (mpg ~ cyl + wt, data=mtcars)
+     predModel
+</code></pre>
+
+<pre><code>## 
+## Call:
+## lm(formula = mpg ~ cyl + wt, data = mtcars)
+## 
+## Coefficients:
+## (Intercept)          cyl           wt  
+##      39.686       -1.508       -3.191
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h2>Generating the Prediction</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>The actual mpg predicted is easily generated.  The simulation below shows how one could use the same method to generate the value for 5 randomly selected cylinder and weight pairs.</p>
+
+<pre><code class="r">     newcyl &lt;- seq(min(mtcars$cyl), max(mtcars$cyl), length=5)
+     newwt &lt;- seq(min(mtcars$wt), max(mtcars$wt), length=5)
+     newdata &lt;- data.frame(cbind(cyl=newcyl, wt=newwt))
+     newmpg &lt;- data.frame(predict(predModel, newdata, interval=&quot;prediction&quot;))
+     newdata$mpg &lt;- newmpg$fit
+     newdata
+</code></pre>
+
+<pre><code>##   cyl      wt      mpg
+## 1   4 1.51300 28.82714
+## 2   5 2.49075 24.19937
+## 3   6 3.46850 19.57160
+## 4   7 4.44625 14.94384
+## 5   8 5.42400 10.31607
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>Conclusion</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>The application is a simple one, but a useful one that satisfies many objectives.</p>
+
+<ol>
+<li>You will get a reasonable accurate prediction of your vehicles mpg.</li>
+<li>It is easy to use and readily available via the web.</li>
+<li>It demonstrates the capabilities of shiny.</li>
+<li>It costs nothing and it is ad free.</li>
+</ol>
+
+<p>Go check out Predict MPG at <a href="http://shereenjones.shinyapps.io/pa1_app">http://shereenjones.shinyapps.io/pa1_app</a>.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Welcome to Predict MPG'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Basis of the Prediction Model'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Generating the Prediction'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Conclusion'>
+         4
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>

@@ -1,0 +1,97 @@
+---
+title       : Predict MPG
+subtitle    : Use number of cylinders and weight in tons, to predict vehicle mpg
+author      : Shereen Jones
+job         : R Student
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : [shiny, interactive]            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+knit        : slidify::knit2slides
+logo        : dss_logo.png
+runtime     : shiny
+
+---
+
+## Welcome to Predict MPG
+
+Predict MPG is a shiny app that allows you to predict the miles-per-gallon of any vehicle given the number of cylinders and weight of the vehicle.
+
+It is an easy-to-use intuitive application.
+
+The application is available at http://shereenjones.shinyapps.io/pa1_app and may be used by anyone who so desires.
+
+---
+
+## Basis of the Prediction Model
+
+The prediction model is built using the mtcars data in R.  The model is developed as follows:
+``` {r model}
+     library(UsingR)
+     predModel <- lm (mpg ~ cyl + wt, data=mtcars)
+     predModel
+```
+
+---
+
+## Generating the Prediction
+
+The actual mpg predicted is easily generated.  The simulation below shows how one could use the same method to generate the value for 5 randomly selected cylinder and weight pairs.
+
+```{r predict}
+     newcyl <- seq(min(mtcars$cyl), max(mtcars$cyl), length=5)
+     newwt <- seq(min(mtcars$wt), max(mtcars$wt), length=5)
+     newdata <- data.frame(cbind(cyl=newcyl, wt=newwt))
+     newmpg <- data.frame(predict(predModel, newdata, interval="prediction"))
+     newdata$mpg <- newmpg$fit
+     newdata
+```
+
+---
+
+## Conclusion
+
+The application is a simple one, but a useful one that satisfies many objectives.
+
+1. You will get a reasonable accurate prediction of your vehicles mpg.
+2. It is easy to use and readily available via the web.
+3. It demonstrates the capabilities of shiny.
+4. It costs nothing and it is ad free.
+
+Go check out Predict MPG.
+
+---
+
+## Play with Predict MPG here
+
+Input number of cylinders and weight in tons:
+
+
+```{r getinput, echo=FALSE, cache=FALSE, opts.label='shiny'}
+     library(shiny); library(shinyapps); library(UsingR)
+     data(mtcars)
+     app <- shinyApp(
+          ui = bootstrapPage(
+               numericInput( "cyl2", label = "No of cylinders",
+                             value = mean(mtcars$cyl)),
+               numericInput("wt2", label = "Weight", value = mean(mtcars$wt)),
+               textOutput("p1")
+          ),
+          server = function(input, output) {
+               output$p1 <- renderText (
+                   paste ("your mpg is",
+                           predict(predModel, 
+                                   data.frame(cbind(cyl=input$cyl2,
+                                                    wt=input$wt2)
+                                              ),
+                                   interval = "prediction")[1],
+                           sep = " ") 
+               )
+          },
+          options = list(height = 500)
+     )
+     runApp(app)
+
+```
+

@@ -1,0 +1,7 @@
+name: Publish Document
+account: rpubs
+server: rpubs.com
+bundleId:
+        https://api.rpubs.com/api/v1/document/88113/655e9021001641869c164cf5edd88dc4
+url: http://rpubs.com/shereenjones/88113
+when: 1434910198.12035
